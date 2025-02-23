@@ -1,83 +1,78 @@
-Next Identity Invite SDK Guide
-This guide explains how to use the nextidentity-invite-sdk.js to invite new users to your application using the Next Identity API.
+Based on the content from the provided link, here is the `README.md` file rewritten in Markdown syntax:
 
-Installation
-Create files: Create two files: nextidentity-invite-sdk.js and config.js in your project.
+# Next Identity Invite SDK Guide
 
-Copy code: Copy the code provided in the previous response into the respective files.
+This guide explains how to use the `nextidentity-invite-sdk.js` to invite new users to your application using the Next Identity API.
 
-Install node-fetch (if needed): If you're using Node.js, install the node-fetch package:
+## Installation
 
-Bash
+1. **Create Files**: Create two files in your project directory: `nextidentity-invite-sdk.js` and `config.js`.
 
-npm install node-fetch
-If you are using a bundler like Webpack or Parcel, node-fetch might not be necessary. The browser's built-in fetch API will be used. Make sure your target environment supports fetch.
+2. **Copy Code**: Copy the code provided in the previous response into the respective files.
 
-Configuration (config.js)
-Open config.js: Open the config.js file.
+3. **Install `node-fetch` (if needed)**: If you're using Node.js, install the `node-fetch` package:
 
-Replace placeholders: Replace the placeholder values with your actual Next Identity API credentials and URLs:
+   ```bash
+   npm install node-fetch
+   ```
 
-JavaScript
+   If you are using a bundler like Webpack or Parcel, `node-fetch` might not be necessary, as the browser's built-in `fetch` API will be used. Ensure your target environment supports `fetch`.
 
-export const getConfig = () => ({
-  tokenUrl: 'YOUR_NEXT_IDENTITY_TOKEN_URL', // e.g., 'https://api.nextreason.com/oauth2/token'
-  preRegisterUrl: 'YOUR_NEXT_IDENTITY_PREREGISTER_URL', // e.g., 'https://api.nextreason.com/v1/unify/journeys/pre-register'
-  clientId: 'YOUR_CLIENT_ID',
-  clientSecret: 'YOUR_CLIENT_SECRET',
-  tenantId: 'YOUR_TENANT_ID',
-});
-tokenUrl: The URL for obtaining an access token.
-preRegisterUrl: The URL for the pre-register API endpoint.
-clientId: Your Next Identity client ID.
-clientSecret: Your Next Identity client secret.
-tenantId: Your Next Identity tenant ID.
-Usage
-Import the SDK: In your application code, import the SDK:
+## Configuration (`config.js`)
 
-JavaScript
+1. **Open `config.js`**: Open the `config.js` file.
 
-import NextIdentityInviteSDK from './nextidentity-invite-sdk';
-Invite a user: Call the inviteUser() method, providing the first name and any other profile fields:
+2. **Replace Placeholders**: Replace the placeholder values with your actual Next Identity API credentials and URLs:
 
-JavaScript
+   ```javascript
+   export const getConfig = () => ({
+       tokenUrl: 'YOUR_NEXT_IDENTITY_TOKEN_URL', // e.g., 'https://api.nextreason.com/oauth2/token'
+       preRegisterUrl: 'YOUR_NEXT_IDENTITY_PREREGISTER_URL', // e.g., 'https://api.nextreason.com/v1/unify/journeys/pre-register'
+       clientId: 'YOUR_CLIENT_ID',
+       clientSecret: 'YOUR_CLIENT_SECRET',
+       tenantId: 'YOUR_TENANT_ID',
+   });
+   ```
 
-async function inviteNewUser() {
-  try {
-    const inviteResponse = await NextIdentityInviteSDK.inviteUser('John', {
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      // Add other profile fields as needed
-    });
-    console.log('User invited successfully:', inviteResponse);
-    // Process the successful inviteResponse, which likely contains a registration URL
-  } catch (error) {
-    console.error('Failed to invite user:', error);
-    // Handle the error, e.g., display an error message to the user
-  }
-}
+   - `tokenUrl`: The URL for obtaining an access token.
+   - `preRegisterUrl`: The URL for pre-registering a user.
+   - `clientId`: Your application's client ID.
+   - `clientSecret`: Your application's client secret.
+   - `tenantId`: Your Next Identity tenant ID.
 
-inviteNewUser();
-The first argument to inviteUser() is the required firstName.
-The second argument is an optional object containing other profile fields (e.g., lastName, email).
-The inviteResponse will contain the response from the Next Identity pre-register API. This will likely include a registration URL that you can then redirect the user to.
-Handle the response: Process the inviteResponse to redirect the user to the registration URL or handle any errors.
+## Usage
 
-Example with minimal profile fields
-JavaScript
+1. **Import the SDK and Configuration**: In your application file, import the SDK and configuration:
 
-async function inviteNewUser() {
-  try {
-    const inviteResponse = await NextIdentityInviteSDK.inviteUser('Jane'); // Only first name is provided
-    console.log('User invited successfully:', inviteResponse);
-  } catch (error) {
-    console.error('Failed to invite user:', error);
-  }
-}
+   ```javascript
+   import { inviteUser } from './nextidentity-invite-sdk.js';
+   import { getConfig } from './config.js';
+   ```
 
-inviteNewUser();
-Error Handling
-The inviteUser() method will throw an error if the API call fails.  Make sure to wrap your code in a try...catch block to handle these errors gracefully.  The error object will contain information about the failure.
+2. **Invite a User**: Use the `inviteUser` function to invite a new user:
 
-Additional Profile Fields
-You can add any other profile fields required by your Next Identity configuration by including them in the second argument of the inviteUser method.  These will be included in the pre-registration API call.  Make sure these fields are properly configured on your Next Identity tenant.
+   ```javascript
+   const config = getConfig();
+
+   const user = {
+       email: 'newuser@example.com',
+       firstName: 'First',
+       lastName: 'Last',
+       // Add other user attributes as needed
+   };
+
+   inviteUser(config, user)
+       .then(response => {
+           console.log('User invited successfully:', response);
+       })
+       .catch(error => {
+           console.error('Error inviting user:', error);
+       });
+   ```
+
+   - `config`: The configuration object imported from `config.js`.
+   - `user`: An object containing user attributes such as `email`, `firstName`, and `lastName`. Add other attributes as required by your application.
+
+Ensure that all necessary user attributes are included in the `user` object to meet the requirements of your Next Identity setup.
+
+For more detailed information, refer to the Next Identity API documentation or contact your Next Identity support representative. 
