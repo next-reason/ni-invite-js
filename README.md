@@ -6,11 +6,14 @@ This guide explains how to use the `nextidentity-invite-sdk.js` to invite new us
 
 ## Installation
 
-1. **Create Files**: Create two files in your project directory: `nextidentity-invite-sdk.js` and `config.js`.
+1. **Clone the Repository**
 
-2. **Copy Code**: Copy the code provided in the previous response into the respective files.
+```bash
+git clone https://github.com/next-reason/ni-invite-js.git
+cd ni-invite-js
+```
 
-3. **Install `node-fetch` (if needed)**: If you're using Node.js, install the `node-fetch` package:
+2. **Install `node-fetch` (if needed)**: If you're using Node.js, install the `node-fetch` package:
 
    ```bash
    npm install node-fetch
@@ -56,8 +59,8 @@ This guide explains how to use the `nextidentity-invite-sdk.js` to invite new us
 
    const user = {
        email: 'newuser@example.com',
-       firstName: 'First',
-       lastName: 'Last',
+       firstName: 'NameHere',
+       tenant_id: tenantId,
        // Add other user attributes as needed
    };
 
